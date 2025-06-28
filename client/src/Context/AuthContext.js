@@ -27,7 +27,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const login = () => {
-    fetchUser(); // fetch user info after cookie is set
+    fetchUser(); 
   };
 
   return (

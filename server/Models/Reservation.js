@@ -6,7 +6,7 @@ const reservationSchema = new mongoose.Schema(
     spotId:  { type: mongoose.Schema.Types.ObjectId, ref: "Spot", required: true },
     pricePerHour: Number,
     status: { type: String, enum: ["active", "cancelled", "completed"], default: "active" },
-    expiresAt: Date,   // optional hold-TTL
+    expiresAt: Date,   
   },
   { timestamps: true }
 );

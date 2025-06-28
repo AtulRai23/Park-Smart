@@ -9,6 +9,6 @@ export default function useCountdown(until) {
     return () => clearInterval(id);
   }, [until]);
 
-  // clamp at zero
+  
   return Math.max(0, left);
 }

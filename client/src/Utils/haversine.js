@@ -1,7 +1,7 @@
-// Returns distance in metres between two {lat, lng} objects
+
 export default function haversine(a, b) {
   const toRad = (v) => (v * Math.PI) / 180;
-  const R = 6371000; // metres
+  const R = 6371000; 
   const dLat = toRad(b.lat - a.lat);
   const dLng = toRad(b.lng - a.lng);
   const lat1 = toRad(a.lat);

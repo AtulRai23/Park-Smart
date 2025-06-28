@@ -4,7 +4,7 @@ const User = require("../Models/User");
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
-// POST /auth/google
+
 exports.googleLogin = async (req, res) => {
   const { token } = req.body;
 console.log("Token from frontend:", token);
@@ -30,7 +30,7 @@ console.log("Token from frontend:", token);
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: "Lax",
-        maxAge: 24 * 60 * 60 * 1000, // 1 day
+        maxAge: 24 * 60 * 60 * 1000, 
       })
       .status(200)
       .json({ user });
@@ -41,7 +41,7 @@ console.log("Token from frontend:", token);
   }
 };
 
-// GET /auth/me
+
 exports.getCurrentUser = async (req, res) => {
   const token = req.cookies.token;
   if (!token) return res.status(401).json({ message: "Not logged in" });
@@ -57,7 +57,7 @@ exports.getCurrentUser = async (req, res) => {
   }
 };
 
-// POST /auth/logout
+
 exports.logout = (req, res) => {
   res.clearCookie("token").json({ message: "Logged out" });
 };

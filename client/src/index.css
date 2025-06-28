@@ -1,22 +1,22 @@
-/* ───── Tailwind layers ─────────────────────── */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* ───── Custom components / utilities ──────── */
+
 @layer components {
-  /* reusable card container */
+  
   .card {
     @apply rounded-2xl p-6 shadow-card bg-slate-900;
   }
 
-  /* optional glass-effect surface */
+  
   .glass {
     @apply backdrop-blur-md bg-white/10 border border-white/10;
   }
 }
 
-/* ───── Base tweaks ─────────────────────────── */
+
 html { scroll-behavior: smooth; }
 
 ::-webkit-scrollbar         { width: 8px; height: 8px; }

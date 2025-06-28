@@ -1,14 +1,14 @@
 const Spot        = require("../Models/Spot");
 const Reservation = require("../Models/Reservation");
-// ⚠️  remove circular import — we'll grab io from req.app later
 
-// POST /api/reservations  { spotId }
+
+
 exports.createReservation = async (req, res) => {
-  const userId  = req.user.id;         // comes from auth middleware
+  const userId  = req.user.id;         
   const { spotId } = req.body;
 
   try {
-    // 1. lock the spot if it’s still free
+    
     const spot = await Spot.findOneAndUpdate(
       { _id: spotId, isOccupied: false },
       { $set: { isOccupied: true } },
@@ -17,7 +17,7 @@ exports.createReservation = async (req, res) => {
     if (!spot)
       return res.status(409).json({ msg: "Spot no longer available" });
 
-    // 2. create reservation (10-min hold)
+    
     const reservation = await Reservation.create({
       userId,
       spotId,
@@ -26,8 +26,8 @@ exports.createReservation = async (req, res) => {
       status: "active",
     });
 
-    // 3. broadcast update safely
-    const io = req.app.get("io");      // <── fetch Socket.IO instance
+    
+    const io = req.app.get("io");      
     if (io) io.emit("spotUpdated", spot);
 
     res.status(201).json(reservation);
@@ -37,7 +37,7 @@ exports.createReservation = async (req, res) => {
   }
 };
 
-// PATCH /api/reservations/:id  { status }
+
 exports.updateReservation = async (req, res) => {
   const { id }     = req.params;
   const { status } = req.body;
@@ -50,14 +50,14 @@ exports.updateReservation = async (req, res) => {
     reservation.status = status;
     await reservation.save();
 
-    // free the spot if cancelled/completed
+    
     if (status !== "active") {
       const spot = await Spot.findByIdAndUpdate(
         reservation.spotId,
         { $set: { isOccupied: false } },
         { new: true }
       );
-      const io = req.app.get("io");    // <── same pattern
+      const io = req.app.get("io");    
       if (io) io.emit("spotUpdated", spot);
     }
 
@@ -67,11 +67,11 @@ exports.updateReservation = async (req, res) => {
     res.status(500).json({ msg: err.message });
   }
 };
-// GET /api/reservations/me  → all reservations for the logged-in user
+
 exports.getMyReservations = async (req, res) => {
   const list = await Reservation
     .find({ userId: req.user.id })
-    .populate("spotId", "name pricePerHour")   // join spot name/price
+    .populate("spotId", "name pricePerHour")   
     .sort({ createdAt: -1 });
 
   res.json(list);

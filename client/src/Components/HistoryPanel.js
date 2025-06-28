@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import useCountdown from "../Utils/useCountdown";
 
-/* ---------------- helper row ---------------- */
+
 function Row({ r, onAction }) {
   const leftMs = useCountdown(new Date(r.expiresAt).getTime());
   const mm = String(Math.floor(leftMs / 60_000)).padStart(2, "0");
@@ -21,7 +21,7 @@ function Row({ r, onAction }) {
       <span>
         {r.status === "active"
           ? r.paid
-            ? "💰"              // paid & still active
+            ? "💰"             
             : (
               <div className="flex gap-2">
                 <button
@@ -47,7 +47,7 @@ function Row({ r, onAction }) {
 }
 
 
-/* ---------------- main panel ---------------- */
+
 export default function HistoryPanel() {
   const [list, setList] = useState(null);
 
@@ -58,7 +58,7 @@ export default function HistoryPanel() {
     setList(await res.json());
   };
 
-  /* handle Cancel / Complete clicks */
+  
   const patchStatus = async (id, status) => {
     await fetch(`http://localhost:5000/api/reservations/${id}`, {
       method: "PATCH",
@@ -67,13 +67,13 @@ export default function HistoryPanel() {
       body: JSON.stringify({ status }),
     });
 
-    // refresh immediately
+    
     fetchList();
-    // let MapPanel know so it can show/hide marker
+    
     window.dispatchEvent(new Event("history-refresh"));
   };
 
-  /* initial + on custom event */
+  
   useEffect(() => {
     fetchList();
     const h = () => fetchList();

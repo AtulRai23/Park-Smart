@@ -15,8 +15,8 @@ export default function LoginPage() {
         { token: cred.credential },
         { withCredentials: true }
       );
-      login();            // fetch /auth/me
-      navigate("/");      // go to dashboard
+      login();            
+      navigate("/");     
     } catch {
       alert("Login failed");
     }

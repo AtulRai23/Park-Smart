@@ -1,6 +1,6 @@
 const Spot = require("../Models/Spot");
 
-/* POST /api/spots  (admin only – but no auth guard yet) */
+
 exports.createSpot = async (req, res) => {
   try {
     const spot = await Spot.create(req.body);
@@ -10,7 +10,7 @@ exports.createSpot = async (req, res) => {
   }
 };
 
-/* PATCH /api/spots/:id  (update price or occupancy) */
+
 exports.updateSpot = async (req, res) => {
   try {
     const spot = await Spot.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -21,9 +21,9 @@ exports.updateSpot = async (req, res) => {
   }
 };
 
-/* GET /api/spots/nearby?lat=..&lng=..&radius=km */
+
 exports.nearbySpots = async (req, res) => {
-  const { lat, lng, radius = 1 } = req.query;          // radius in km
+  const { lat, lng, radius = 1 } = req.query;          
   if (!lat || !lng) return res.status(400).json({ msg: "lat & lng required" });
 
   const spots = await Spot.aggregate([
@@ -31,9 +31,9 @@ exports.nearbySpots = async (req, res) => {
       $geoNear: {
         near: { type: "Point", coordinates: [parseFloat(lng), parseFloat(lat)] },
         distanceField: "distM",
-        maxDistance: parseFloat(radius) * 1000,          // km → m
+        maxDistance: parseFloat(radius) * 1000,          
         spherical: true,
-        query: { isOccupied: false },                    // only free spots
+        query: { isOccupied: false },                    
       },
     },
     { $sort: { distM: 1 } },

@@ -5,7 +5,7 @@ const {
   nearbySpots,
 } = require("../Controllers/spotController");
 
-router.post("/",    createSpot);              // TODO: add admin auth
+router.post("/",    createSpot);              
 router.patch("/:id", updateSpot);
 router.get("/nearby", nearbySpots);
 
