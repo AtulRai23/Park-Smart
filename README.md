@@ -48,3 +48,8 @@ Payments: Razorpay (with secure webhooks)
 (5) Payment is verified on the backend via webhook, and the spot is marked as paid and reserved.
 
 (6) All users see live updates thanks to Socket.IO integration.
+
+
+## Contributors
+- [AtulRai23](https://github.com/AtulRai23)  
+- [AyushPrateek1](https://github.com/AyushPrateek1)
